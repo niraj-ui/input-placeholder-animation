@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+	
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Input Placehodler Animtaion</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+<div class="container">
+<h2>Placeholder Animation</h2> 
+<input type="text"  id="quickInq_vniraj" placeholder="John@gmail.com" class="form-control">   
+</div>
+	
+<script >
+
+var milliseconds = 4000;
+
+placeholder = function(){
+            
+	this.write_placeholder = function(field, text, n) {
+            
+		if (n < (text.length)) {
+			$('#'+field).attr("placeholder", text.substring(0, n+1));
+			n++;
+			setTimeout(function() {
+				var obj = new placeholder();
+				obj.write_placeholder(field, text, n)
+			}, 65);
+		}
+	}
+                
+	this.set_fields = function(objFields){
+		for (var key in objFields) {
+			// skip loop if the property is from prototype
+			if (!objFields.hasOwnProperty(key)) continue;
+				this.write_placeholder(key, objFields[key], 0);
+				this.intervallize(objFields);
+		}
+	}
+                
+	this.intervallize = function(objFields){
+		var interval = setInterval(function() {
+			for (var key in objFields) {
+				if (!objFields.hasOwnProperty(key)) continue;
+					var obj = new placeholder();
+					obj.write_placeholder(key, objFields[key], 0);
+			}
+		}, milliseconds);
+	}
+                
+	this.interval_time = function(ms){
+		milliseconds = ms;
+	}
+                
+}
+
+
+var obj = new placeholder();
+obj.interval_time(9000);  
+
+setTimeout(function(){ obj.set_fields({
+ 'quickInq_vniraj': 'John@gmail.com',
+}, 1000);  }, 3000);
+	
+</script>
+</body>
+</html>
